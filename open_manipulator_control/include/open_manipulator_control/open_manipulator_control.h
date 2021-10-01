@@ -30,8 +30,8 @@ namespace open_manipulator_control
             OpenManipulatorController(std::string usb_port, std::string baud_rate);
             ~OpenManipulatorController();
 
-            read();
-            write();
+            bool read(ros::Time, ros::Duration);
+            bool write(ros::Time, ros::Duration);
 
             // ROS NodeHandle
             ros::NodeHandle node_handle_;
@@ -39,10 +39,12 @@ namespace open_manipulator_control
 
             // ROS Parameters
             bool using_platform_;
-            double control_period_;
+            double control_period_; 
             
         private : 
-    
+            // Related robotis_manipulator
+            OpenManipulator open_manipulator_;
+
             // ROS Control interfaces. 
             hardware_interface::JointStateInterface jntStInterface_;
             hardware_interface::PositionJointInterface posJntInterface_;
@@ -54,6 +56,10 @@ namespace open_manipulator_control
             std::vector<double> vel_;
             std::vector<double> eff_;
             int total_joints = 7;
-    }
+
+            bool debug = false;
+    };
 
 }
+
+#endif  

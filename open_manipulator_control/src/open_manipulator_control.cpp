@@ -1,14 +1,18 @@
   
 #include "open_manipulator_control/open_manipulator_control.h"
  
-using namespace open_manipulator_control;
+
+namespace open_manipulator_control
+{
 
 OpenManipulatorController::OpenManipulatorController(std::string usb_port, std::string baud_rate)
     :node_handle_(""),
-    priv_node_handle_("~"),
+    priv_node_handle_("~")
 {
-  control_period_       = priv_node_handle_.param<double>("control_period", 0.010f);
-  open_manipulator_.initOpenManipulator(using_platform_, usb_port, baud_rate, control_period_);
+    
+    control_period_       = priv_node_handle_.param<double>("control_period", 0.010f);
+    open_manipulator_.initOpenManipulator(using_platform_, usb_port, baud_rate, control_period_);
+    // open_manipulator_.initOpenManipulator(using_platform_, usb_port, baud_rate, control_period_);
 
     pos_.resize( total_joints );
     vel_.resize( total_joints );
@@ -33,6 +37,11 @@ OpenManipulatorController::OpenManipulatorController(std::string usb_port, std::
         hardware_interface::JointHandle pos_handle(jntStInterface_.getHandle(ss.str()), &cmd_[i]);
         posJntInterface_.registerHandle(pos_handle);
     }
+
+    // register interfaces
+    registerInterface(&jntStInterface_);
+    registerInterface(&posJntInterface_);
+
 }
 
 OpenManipulatorController::~OpenManipulatorController()
@@ -42,12 +51,14 @@ OpenManipulatorController::~OpenManipulatorController()
     ros::shutdown();
 }
 
-OpenManipulatorController::read()
+bool OpenManipulatorController::read(ros::Time time, ros::Duration period)
 {
     ROS_INFO("Read joint states and put it in pos_, vel_ eff_ variables");
 }
 
-OpenManipulatorController::write()
+bool OpenManipulatorController::write(ros::Time time, ros::Duration period)
 {
     ROS_INFO("Write joint states here");
+}
+
 }

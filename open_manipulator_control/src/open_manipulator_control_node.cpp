@@ -11,7 +11,13 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "open_manipulator_control_node");
     ros::NodeHandle nh;
 
-    open_manipulator_control::OpenManipulatorController open_manipulator_control;
+    const char* port_name = "/dev/ttyUSB0";
+    const char* baudrate = "1000000";
+
+    // control_period_ = priv_node_handle_.param<double>("control_period", 0.010f);
+
+
+    open_manipulator_control::OpenManipulatorController open_manipulator_control(port_name, baudrate);
 
     ros::CallbackQueue queue;
     controller_manager::ControllerManager cm(&open_manipulator_control, nh);
@@ -21,21 +27,19 @@ int main(int argc, char** argv)
     spinner.start();
     ros::Time now = ros::Time::now();
 
+    bool success = false;
+
     while (ros::ok())
     {
         ros::Duration dt = ros::Time::now() - now;
         ros::Time now = ros::Time::now();
-        success = open_manipulator_control.read(ros::Time::now(), dt);
-        if (!success){
-            break;
-        }
-        
-        cm.update(ros::Time::now(), dt); 
 
+        // PID Loop
+        success = open_manipulator_control.read(ros::Time::now(), dt);
+        if (!success) { break ; }
+        cm.update(ros::Time::now(), dt); 
         success = open_manipulator_control.write(ros::Time::now(), dt);
-        if (!success){
-            break;
-        }
+        if (!success) { break ; }
         rate.sleep();
     }
     spinner.stop();
