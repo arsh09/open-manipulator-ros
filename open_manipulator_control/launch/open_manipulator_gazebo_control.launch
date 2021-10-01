@@ -1,0 +1,33 @@
+<launch>
+
+    <!-- Upload URDF to param server -->
+    <param name="robot_description"
+         command="$(find xacro)/xacro --inorder '$(find open_manipulator_6dof_description)/urdf/open_manipulator_6dof.urdf.xacro'"/>
+
+    <!-- Start Gazebo -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="use_sim_time" value="true"/>
+        <arg name="debug" value="false"/>
+        <arg name="paused" value="false" />
+        <arg name="gui" value="true" />
+    </include>
+
+    <!-- Spawn robot URDF to Gazebo -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+            args="-urdf -model open-manipulator -param robot_description "/>
+
+
+    <!-- Upload controller config to param server -->
+    <rosparam file="$(find open_manipulator_control)/config/controllers.yaml" command="load" subst_value="true"/>
+
+    <!-- Spawn the controllers to gazebo to control the arm -->
+    <node name="open_manipulator_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" 
+        args=" open_manipulator_joint_state_controller open_manipulator_arm_position_controller open_manipulator_gripper_position_controller" />
+
+    <!-- Combine joint values to TF to create robot states -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+
+    <!-- open RViZ for visualization -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find open_manipulator_6dof_description)/rviz/open_manipulator_6dof.rviz"/>
+  
+</launch>

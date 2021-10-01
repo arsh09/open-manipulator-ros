@@ -53,9 +53,17 @@
   <!-- ros_control plugin -->
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>open_manipulator_6dof</robotNamespace>
+      <robotNamespace></robotNamespace>
       <controlPeriod>0.001</controlPeriod>
       <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="separation_mimic_joints" filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so">
+      <joint>gripper</joint>
+      <mimicJoint>gripper_sub</mimicJoint>
+      <multiplier>1</multiplier>
     </plugin>
   </gazebo>
 

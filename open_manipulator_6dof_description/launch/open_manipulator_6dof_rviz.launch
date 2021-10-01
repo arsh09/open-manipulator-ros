@@ -18,4 +18,5 @@
   <group if="$(arg open_rviz)">
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find open_manipulator_6dof_description)/rviz/open_manipulator_6dof.rviz"/>
   </group>
+  
 </launch>
