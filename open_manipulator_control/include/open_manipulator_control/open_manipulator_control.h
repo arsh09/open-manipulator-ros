@@ -39,11 +39,21 @@ namespace open_manipulator_control
 
             // ROS Parameters
             bool using_platform_;
-            bool using_moveit_;
             double control_period_;
             
         private : 
     
+            // ROS Control interfaces. 
+            hardware_interface::JointStateInterface jntStInterface_;
+            hardware_interface::PositionJointInterface posJntInterface_;
+
+            // variables to hold command received from ros control 
+            // and states to update in ros control
+            std::vector<double> cmd_;
+            std::vector<double> pos_;
+            std::vector<double> vel_;
+            std::vector<double> eff_;
+            int total_joints = 7;
     }
 
 }
