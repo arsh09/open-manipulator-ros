@@ -9,13 +9,11 @@
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "open_manipulator_control_node");
-    ros::NodeHandle nh;
+    ros::NodeHandle nh("");
+    ros::NodeHandle priv_node_handle_("~");
 
-    const char* port_name = "/dev/ttyUSB0";
-    const char* baudrate = "1000000";
-
-    // control_period_ = priv_node_handle_.param<double>("control_period", 0.010f);
-
+    std::string port_name = priv_node_handle_.param<std::string>("port_name", "/dev/ttyUSB0");
+    std::string baudrate = priv_node_handle_.param<std::string>("baudrate", "1000000");
 
     open_manipulator_control::OpenManipulatorController open_manipulator_control(port_name, baudrate);
 
