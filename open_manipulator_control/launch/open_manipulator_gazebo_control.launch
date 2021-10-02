@@ -1,5 +1,7 @@
 <launch>
 
+    <arg name="open_rviz" default="true"/>
+
     <!-- Upload URDF to param server -->
     <param name="robot_description"
          command="$(find xacro)/xacro --inorder '$(find open_manipulator_6dof_description)/urdf/open_manipulator_6dof.urdf.xacro'"/>
@@ -27,7 +29,9 @@
     <!-- Combine joint values to TF to create robot states -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
 
-    <!-- open RViZ for visualization -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find open_manipulator_6dof_description)/rviz/open_manipulator_6dof.rviz"/>
-  
+    <group if="$(arg open_rviz)">
+        <!-- open RViZ for visualization -->
+        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find open_manipulator_6dof_description)/rviz/open_manipulator_6dof.rviz"/>
+    </group>
+
 </launch>

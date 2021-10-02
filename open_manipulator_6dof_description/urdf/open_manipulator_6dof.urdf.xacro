@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- Open_Manipulator 6DOF -->
-<robot name="open_manipulator_6dof" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="open_manipulator" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- Import all Gazebo-customization elements, including Gazebo colors -->
   <xacro:include filename="$(find open_manipulator_6dof_description)/urdf/open_manipulator_6dof.gazebo.xacro" />

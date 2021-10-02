@@ -1,0 +1,21 @@
+<launch>
+
+    <arg name="sim" default="true"/>
+
+    <!-- Start Gazebo -->
+    <include file="$(find open_manipulator_control)/launch/open_manipulator_gazebo_control.launch">
+        <arg name="open_rviz" value="false"/>
+    </include>
+
+    <!-- Run the main MoveIt! executable without trajectory execution (we do not have controllers configured by default) -->
+    <include file="$(find open_manipulation_moveit_config)/launch/move_group.launch">
+        <arg name="allow_trajectory_execution" value="true"/>
+        <arg name="fake_execution" value="false"/>
+    </include>
+
+    <!-- Run Rviz and load the default config to see the state of the move_group node -->
+    <include file="$(find open_manipulation_moveit_config)/launch/moveit_rviz.launch">
+        <arg name="rviz_config" value="$(find open_manipulation_moveit_config)/launch/moveit.rviz"/>
+    </include>
+    
+</launch>
