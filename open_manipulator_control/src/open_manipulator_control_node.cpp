@@ -1,6 +1,6 @@
 
 #include <controller_manager/controller_manager.h>
-#include "open_manipulator_control/open_manipulator_control.h"
+#include "open_manipulator_control/open_manipulator_hw_interface.h"
 #include <thread>
 #include <chrono>
 #include <string.h>

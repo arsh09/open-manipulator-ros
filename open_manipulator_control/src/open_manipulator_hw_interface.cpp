@@ -1,5 +1,5 @@
   
-#include "open_manipulator_control/open_manipulator_control.h"
+#include "open_manipulator_control/open_manipulator_hw_interface.h"
  
 
 namespace open_manipulator_control

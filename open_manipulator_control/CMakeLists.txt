@@ -36,16 +36,16 @@ include_directories(
 )
 
 ## Declare a C++ library
- add_library(${PROJECT_NAME}
-         src/open_manipulator_control.cpp        
+ add_library(${PROJECT_NAME}_hw_inteface
+         src/open_manipulator_hw_interface.cpp        
  )
 
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(${PROJECT_NAME}_hw_inteface
         ${catkin_LIBRARIES}
         ${Boost_LIBRARIES}
 )
 
 ## Declear a C++ node
 add_executable(open_manipulator_control_node src/open_manipulator_control_node.cpp)
-target_link_libraries(open_manipulator_control_node  ${PROJECT_NAME})
-add_dependencies(open_manipulator_control_node ${PROJECT_NAME} )
+target_link_libraries(open_manipulator_control_node  ${PROJECT_NAME}_hw_inteface)
+add_dependencies(open_manipulator_control_node ${PROJECT_NAME}_hw_inteface )
